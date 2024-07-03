@@ -1,0 +1,125 @@
+@use "variables" as *;
+
+:root {
+  --animation-progress-time: 5000ms;
+}
+
+.toast {
+  z-index: 100;
+  cursor: default;
+  display: none;
+  position: absolute;
+  bottom: 1em;
+  border-radius: 20px;
+  background: var(--foreground);
+  padding: 20px 35px 20px 25px;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  transform: translateY(calc(100% + 30px));
+  transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.35);
+  &.active {
+    transform: translateY(0%);
+  }
+  .toast-content {
+    @include center();
+  }
+}
+
+.toast-content {
+  .emoji {
+    cursor: default;
+    @include center();
+    height: 40px;
+    width: 40px;
+    background-color: var(--button-txt-hover);
+    color: #fff;
+    border-radius: 35%;
+    font-size: 18px;
+  }
+  .message {
+    display: flex;
+    flex-direction: column;
+    margin: 0 15px;
+  }
+}
+
+.message .text {
+  font-size: 20px;
+  font-weight: $regular;
+  color: var(--alert-text);
+  &.text-1 {
+    font-weight: $medium;
+    color: var(--alert-header);
+  }
+  b {
+    font-weight: bolder;
+  }
+}
+
+#alertclick {
+  cursor: default;
+  padding: 3px;
+}
+
+.toast {
+  .close,
+  .disable {
+    transition: 0.2s;
+    position: absolute;
+    top: 15px;
+    right: 10px;
+    padding: 5px;
+    cursor: pointer;
+    color: lighten($color: red, $amount: 20);
+    &:hover {
+      opacity: 1;
+      color: red;
+      text-shadow: 0px 0px 8px red;
+    }
+    &:active {
+      text-shadow: 0px 0px 18px red;
+    }
+  }
+  .disable {
+    display: none;
+    right: 32px;
+    color: lighten($color: red, $amount: 20);
+    &:hover {
+      color: red;
+      text-shadow: 0px 0px 8px red;
+    }
+  }
+}
+
+.toast {
+  .progress {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 3px;
+    width: 100%;
+    background: #ddd;
+    &:before {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      height: 100%;
+      width: 100%;
+      background-color: var(--button-txt-hover);
+      border-radius: 100px;
+    }
+    &.active:before {
+      animation: progress var(--animation-progress-time) linear forwards;
+    }
+  }
+}
+.alertLink {
+  @include link(var(--a-color));
+}
+
+@keyframes progress {
+  100% {
+    right: 100%;
+  }
+}
